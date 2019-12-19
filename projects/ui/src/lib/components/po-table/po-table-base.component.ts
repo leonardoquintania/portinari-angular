@@ -75,7 +75,6 @@ export const poTableLiteralsDefault = {
 export abstract class PoTableBaseComponent implements OnChanges {
 
   private _actions?: Array<PoTableAction> = [];
-  private _checkbox?: boolean;
   private _columns: Array<PoTableColumn> = [];
   private _container?: string;
   private _height?: number;
@@ -84,6 +83,7 @@ export abstract class PoTableBaseComponent implements OnChanges {
   private _items: Array<PoTableColumn>;
   private _literals: PoTableLiterals;
   private _loading?: boolean = false;
+  private _selectable?: boolean;
 
   /**
    * @description
@@ -278,7 +278,12 @@ export abstract class PoTableBaseComponent implements OnChanges {
   /**
    * @optional
    *
+   * @deprecated 4.X.X
    * @description
+   *
+   * **Deprecated**
+   *
+   * > Esta propriedade está depreciada, utilize a propriedade `p-selectable`.
    *
    * Habilita na primeira coluna a opção de selecionar linhas,
    * todos os itens da lista possuem a propriedade dinâmica `$selected` para identificar se a linha está selecionada.
@@ -288,12 +293,7 @@ export abstract class PoTableBaseComponent implements OnChanges {
    * @default `false`
    */
   @Input('p-checkbox') set checkbox(checkbox: boolean) {
-    this._checkbox = <any>checkbox === '' ? true : convertToBoolean(checkbox);
-    this.calculateWidthHeaders();
-  }
-
-  get checkbox() {
-    return this._checkbox;
+    this.selectable = checkbox;
   }
 
   /**
@@ -317,6 +317,27 @@ export abstract class PoTableBaseComponent implements OnChanges {
 
   get actions() {
     return this._actions;
+  }
+
+  /**
+   * @optional
+   *
+   * @description
+   *
+   * Habilita na primeira coluna a opção de selecionar linhas,
+   * todos os itens da lista possuem a propriedade dinâmica `$selected` para identificar se a linha está selecionada.
+   * > Exemplo: `item.$selected` ou `item['$selected']`.
+   * > Os itens filhos possuem comportamento independente do item pai.
+   *
+   * @default `false`
+   */
+  @Input('p-selectable') set selectable(value: boolean) {
+    this._selectable = <any>value === '' ? true : convertToBoolean(value);
+    this.calculateWidthHeaders();
+  }
+
+  get selectable() {
+    return this._selectable;
   }
 
   /**

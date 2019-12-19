@@ -76,13 +76,20 @@ describe('PoTableBaseComponent:', () => {
     expectPropertiesValues(component, 'items', [], []);
   });
 
-  it('should set checkbox selection and call calculateWidthHeaders', () => {
+  it('should set selectable with value of checkbox', () => {
+    component.checkbox = true;
+    const expectedValue = true;
+
+    expect(component.selectable).toEqual(expectedValue);
+  });
+
+  it('should set selectable and call calculateWidthHeaders', () => {
     spyOn(component, 'calculateWidthHeaders');
     const validValues = ['', true, 1];
     const invalidValues = [undefined, null, false, 0];
 
-    expectPropertiesValues(component, 'checkbox', validValues, true);
-    expectPropertiesValues(component, 'checkbox', invalidValues, false);
+    expectPropertiesValues(component, 'selectable', validValues, true);
+    expectPropertiesValues(component, 'selectable', invalidValues, false);
     expect(component.calculateWidthHeaders).toHaveBeenCalled();
   });
 
@@ -270,7 +277,7 @@ describe('PoTableBaseComponent:', () => {
   });
 
   it('should select single row', () => {
-    component.checkbox = true;
+    component.selectable = true;
     component.singleSelect = true;
 
     const firstRow = component.items[0];
@@ -287,7 +294,7 @@ describe('PoTableBaseComponent:', () => {
   it('should select multiple rows', () => {
     component.items.forEach(item => item.$selected = false);
 
-    component.checkbox = true;
+    component.selectable = true;
     component.hideSelectAll = false;
     component.singleSelect = false;
 
@@ -304,7 +311,7 @@ describe('PoTableBaseComponent:', () => {
   it('should not select all rows if hide select all is active', () => {
 
     component.items.forEach(item => item.$selected = false);
-    component.checkbox = true;
+    component.selectable = true;
     component.hideSelectAll = true;
     component.singleSelect = false;
     component.ngOnChanges();
@@ -322,7 +329,7 @@ describe('PoTableBaseComponent:', () => {
   it('should select all rows', () => {
     component.items.forEach(item => item.$selected = false);
 
-    component.checkbox = true;
+    component.selectable = true;
     component.hideSelectAll = false;
     component.singleSelect = false;
     component.selectAllRows();
@@ -335,7 +342,7 @@ describe('PoTableBaseComponent:', () => {
   it('should set checkbox select all to checked', () => {
     component.items.forEach(item => item.$selected = false);
 
-    component.checkbox = true;
+    component.selectable = true;
     component.hideSelectAll = false;
     component.singleSelect = false;
     component.items.forEach(item =>
@@ -347,7 +354,7 @@ describe('PoTableBaseComponent:', () => {
 
   it('should set checkbox select all to unchecked', () => {
     component.items.forEach(item => item.$selected = false);
-    component.checkbox = true;
+    component.selectable = true;
     component.hideSelectAll = false;
     component.singleSelect = false;
     const firstRow = component.items[0];
@@ -359,7 +366,7 @@ describe('PoTableBaseComponent:', () => {
 
   it('should set checkbox select all to indeterminate', () => {
     component.items.forEach(item => item.$selected = false);
-    component.checkbox = true;
+    component.selectable = true;
     component.hideSelectAll = false;
     component.singleSelect = false;
 
